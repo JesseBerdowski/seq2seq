@@ -11,16 +11,14 @@
 # limitations under the License.
 
 from lib_translator_model import Translator
-from lib_util import load_from_bat
+from lib_util import get_dir
 import sys
 
-sentence_in = load_from_bat(sys.argv)
-print(sentence_in)
-print(type(sentence_in))
+with open(get_dir('static/translate.txt'), 'r') as t:
+    sentences_in = t.readlines()
 
 if __name__ == '__main__':
-    lst_in = [sentence_in]
     translator = Translator()
-    _ = translator(lst_in)
+    _ = translator(sentences_in)
     for i, translation in enumerate(translator.translate()):
-        print('we translated: \'{}\' from your requested sentence\'{}\''.format(translation, lst_in[i]))
+        print('we translated: \'{}\' from your requested sentence\'{}\''.format(translation, sentences_in[i]))

@@ -16,13 +16,13 @@ from lib_training_model import SequenceToSequenceWithAttention
 from lib_util import save_dicts, save_model_weights, load_from_bat
 import sys
 
-hparams, data_path, save_dir, num_samples, training = load_from_bat(sys.argv)
+hparams, num_samples = load_from_bat(sys.argv)
 
-d = Dataset(data_path, num_samples, **hparams)
+d = Dataset(num_samples)
 print(d.dec_hot_arr.shape)
 print(d.enc_arr.shape)
 dataset = d()
-s2s = SequenceToSequenceWithAttention(len(d.encoder_dict), len(d.decoder_dict), training, **hparams)
+s2s = SequenceToSequenceWithAttention(len(d.encoder_dict), len(d.decoder_dict), True, **hparams)
 
 loss_obj = set_loss(hparams['loss'])
 optimizer = set_opt(**hparams)

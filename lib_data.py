@@ -16,10 +16,8 @@ from lib_util import get_dir
 
 
 class Dataset:
-    def __init__(self, data_path, num_samples, **kwargs):
-        print(get_dir(data_path))
-        self.batch_size = kwargs['batch_size']
-        self.encoder_lines, self.decoder_lines = self._read_data(get_dir(data_path), num_samples)
+    def __init__(self, num_samples):
+        self.encoder_lines, self.decoder_lines = self._read_data(get_dir('static/training_set.txt'), num_samples)
         self.encoder_dict, self.decoder_dict = self.get_sorted_dict()
         self.enc_num_feats = len(self.encoder_dict)
         self.dec_num_feats = len(self.decoder_dict)
@@ -101,7 +99,6 @@ class Dataset:
 
     def create_dataset_obj(self, enc_embed_arr, dec_hot_arr):
         dataset = tf.data.Dataset.from_tensor_slices((enc_embed_arr, dec_hot_arr)).shuffle(len(self.encoder_lines))
-        dataset = dataset.batch(self.batch_size, drop_remainder=True)
         return dataset
 
 

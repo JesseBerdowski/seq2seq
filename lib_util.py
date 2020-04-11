@@ -17,25 +17,15 @@ import os
 
 
 def load_from_bat(lst_argv):
-    try:
-        if bool(lst_argv[5]):
-            assert len(lst_argv) == 6
-            hparams = json.loads(lst_argv[1])
-            data_path = lst_argv[2]
-            save_dir = lst_argv[3]
-            num_samples = lst_argv[4]
-            training = lst_argv[5]
-            return hparams, data_path, save_dir, int(num_samples), bool(training)
-    except:
-        if bool(lst_argv[2]):
-            assert len(lst_argv) == 3
-            translate_sentence = lst_argv[1]
-            return translate_sentence
-
+    assert len(lst_argv) == 3
+    hparams = json.loads(lst_argv[1])
+    num_samples = lst_argv[2]
+    return hparams, int(num_samples)
 
 
 def save_dicts(enc_dic, dec_dic, enc_max_seq_len, dec_max_seq_len):
-    with open('C:\\Users\Jesse Berdowski\dicts.pickle', 'wb') as f:
+    path = get_dir('static/saved/dicts.pickle')
+    with open(path, 'wb') as f:
         dikt = dict(enc_dict=enc_dic,
                     dec_dict=dec_dic,
                     enc_max_seq_len=enc_max_seq_len,
@@ -44,7 +34,8 @@ def save_dicts(enc_dic, dec_dic, enc_max_seq_len, dec_max_seq_len):
 
 
 def save_model_weights(enc_w, dec_w):
-    with open('C:\\Users\Jesse Berdowski\weights.pickle', 'wb') as f:
+    path = get_dir('static/saved/weights.pickle')
+    with open(path, 'wb') as f:
         lst = []
         for item in enc_w:
             lst.append(K.eval(item))
@@ -65,6 +56,9 @@ def load_pickle(path, sort):
             return dikt['enc_weights'], dikt['dec_weights']
 
 
-def get_dir(data_path):
-    return os.path.join(os.path.dirname(__file__), data_path)
+def get_dir(path):
+    try:
+        return os.path.join(os.path.dirname(__file__), path)
+    except:
+        return 'It looks like you moved the dirs and files, please dont change the git\'s file structure'
 
