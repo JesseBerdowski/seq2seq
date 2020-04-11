@@ -8,9 +8,9 @@ Any dataset from this page could be used for training.
 # How to Use
 I wrote premade scripts for training the model and translating with the model.
 ### Translating with the model
--Create sentences in the static/translate.txt file following the template.
--run the s2s_sample.bat file
+-Create sentences in the static/translate.txt file following the template. \n
+-run the s2s_sample.bat file 
 ### Training the model
--save one of the files of the website as static/training_set.txt
--update the hparams in the s2s_train.bat file
+-save one of the files of the website as static/training_set.txt \n
+-update the hparams in the s2s_train.bat file \n
 -run the s2s_train.bat file
